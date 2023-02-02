@@ -36,6 +36,8 @@ public class Caculator {
                     mess = "Division by ";
                     break;
                 }
+            default:
+                mess="Try again";
 
         }
         modelAndView.addObject("result", result);
