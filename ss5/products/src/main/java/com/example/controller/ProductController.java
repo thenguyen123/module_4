@@ -52,7 +52,7 @@ public class ProductController {
 
     @PostMapping("/update")
     public String update(Products product, RedirectAttributes redirectAttributes) {
-        boolean check = productService.update( product);
+        boolean check = productService.update(product);
         String mess = "fail";
         if (check) {
             mess = "success";
@@ -71,6 +71,12 @@ public class ProductController {
     @PostMapping("/search")
     public String findByName(@RequestParam String search, Model model) {
         List<Products> products = productService.search(search);
+        String mess = "";
+        if (products.size()==0) {
+            mess = "Is Empty";
+            model.addAttribute("message", mess);
+        }
+
         model.addAttribute("list", products);
         return "list";
     }
