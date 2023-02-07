@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<p th:text="${mess}"></p>
+<form th:action="@{/create}" method="post" th:object="${blog}" >
+  <p>Name</p>
+  <input th:field="*{name}" type="text" th:placeholder="*{name}">
+  <p>Author</p>
+  <input th:field="*{author}" type="text" th:placeholder="*{author}">
+  <p>Content</p>
+  <textarea th:field="*{content}" th:placeholder="*{content}"></textarea>
+  <p>Date</p>
+  <input th:field="*{date}" type="date" th:placeholder="*{date}">
+  <button type="submit">Save</button>
+</form>
+</body>
+</html>
