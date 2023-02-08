@@ -13,13 +13,20 @@
     </style>
 </head>
 <body>
+<div th:insert="~{layout :: header}" ></div>
 <h1>List Blog</h1>
-<a th:href="@{/create}" style="text-decoration: none">Create</a>
+<form action="/blog">
+    <input type="text" name="nameSearch" th:value="${nameSearch}">
+    <button class="btn btn-success">Search</button>
+</form>
+<button class="btn btn-success"><a th:href="@{/create}" >Create</a></button>
 <table class="table table-row-cell">
     <tr>
         <th>STT</th>
         <th>NAME</th>
         <th>AUTHOR</th>
+        <th>CATEGORY</th>
+        <th>DATE</th>
         <th>DETAIL</th>
         <th>DELETE</th>
         <th>EDIT</th>
@@ -29,6 +36,8 @@
         <td th:text="${stt.count}"></td>
         <td th:text="${blog.name}"></td>
         <td th:text="${blog.author}"></td>
+        <td th:text="${blog.getCategory().name}"></td>
+        <td th:text="${blog.date}"></td>
         <td>
             <button type="button" class="btn btn-primary" ><a th:href="@{/detail(id=${blog.id})}" style="text-decoration: none">Detail</a></button>
         </td>
@@ -64,7 +73,12 @@
         </div>
     </div>
 </div>
-
+<!--phân trang-->
+<div>
+    <a th:href="@{blog(page=${list.number - 1},nameSearch=${nameSearch})}" th:if="${list.hasPrevious()}"><button class="btn btn-success">Previous</button></a>
+    <span th:text="${list.number +1}"></span>/<span th:text="${list.totalPages}"></span>
+ <a th:href="@{blog(page=${list.number + 1},nameSearch=${nameSearch})}" th:if="${list.hasNext()}"><button class="btn btn-success">Next</button></a>
+</div>
 </body>
 <script>
     function infoDelete(id, name) {

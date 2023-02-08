@@ -1,8 +1,14 @@
 package com.example.blog.controller;
 
 import com.example.blog.model.Blog;
+import com.example.blog.service.CategoryService;
 import com.example.blog.service.IBlogService;
+import com.example.blog.service.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,20 +21,28 @@ import java.util.List;
 @Controller
 public class BlogController {
     @Autowired
+    private ICategoryService categoryService;
+
+    @Autowired
     private IBlogService blogService;
 
     @GetMapping("/blog")
-    public ModelAndView showList() {
+    public ModelAndView showList(@RequestParam(required = false, defaultValue = "") String nameSearch,
+                                 @PageableDefault(size = 2, page = 0, sort = "date", direction = Sort.Direction.ASC) Pageable pageable) {
+        Page<Blog> listBlogs = blogService.findByNam(nameSearch, pageable);
         ModelAndView modelAndView = new ModelAndView("/list");
-        List<Blog> list = blogService.findAll();
-        modelAndView.addObject("list", list);
+        modelAndView.addObject("nameSearch", nameSearch);
+        modelAndView.addObject("list", listBlogs);
+
         return modelAndView;
     }
 
     @GetMapping("/edit")
     public ModelAndView showEdit(@RequestParam int id) {
         Blog blog = blogService.findById(id);
-        ModelAndView modelAndView = new ModelAndView("update", "blog", blog);
+        ModelAndView modelAndView = new ModelAndView("update");
+        modelAndView.addObject("listCategory", categoryService.findAll());
+        modelAndView.addObject("blog", blog);
         return modelAndView;
     }
 
@@ -40,7 +54,9 @@ public class BlogController {
 
     @GetMapping("/create")
     public ModelAndView showCreate() {
-        ModelAndView modelAndView = new ModelAndView("/create", "blog", new Blog());
+        ModelAndView modelAndView = new ModelAndView("/create");
+        modelAndView.addObject("listCategory", categoryService.findAll());
+        modelAndView.addObject("blog", new Blog());
         return modelAndView;
     }
 
@@ -52,13 +68,16 @@ public class BlogController {
         modelAndView.addObject("mess", "Thêm mới thành công");
         return modelAndView;
     }
+
     @GetMapping("/detail")
-    public ModelAndView showFind(@RequestParam int id){
-        Blog blog=blogService.findById(id);
-        ModelAndView modelAndView=new ModelAndView("/view","blog",blog);
+    public ModelAndView showFind(@RequestParam int id) {
+        Blog blog = blogService.findById(id);
+        ModelAndView modelAndView = new ModelAndView("/view", "blog", blog);
         return modelAndView;
-    }@PostMapping("/delete")
-    public String deleteBlog(@RequestParam int deleteId){
+    }
+
+    @PostMapping("/delete")
+    public String deleteBlog(@RequestParam int deleteId) {
         blogService.delete(deleteId);
         return "redirect:/blog";
     }

@@ -12,6 +12,9 @@ public class Blog {
     @Column( columnDefinition="text")
     private String content;
     private String date;
+    @ManyToOne
+    @JoinColumn(name = "category_id",referencedColumnName = "id" )
+    private Category category;
 
     public Blog(int id, String name, String author, String content, String date) {
         this.id = id;
@@ -19,6 +22,23 @@ public class Blog {
         this.author = author;
         this.content = content;
         this.date = date;
+    }
+
+    public Blog(int id, String name, String author, String content, String date, Category category) {
+        this.id = id;
+        this.name = name;
+        this.author = author;
+        this.content = content;
+        this.date = date;
+        this.category = category;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Blog() {
