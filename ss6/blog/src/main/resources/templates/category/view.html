@@ -7,11 +7,13 @@
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
-<div th:insert="~{layout :: header}"> </div>
-<h1 th:text="${blog.getCategory().name}"></h1>
-<h1 th:text="${blog.name}"> </h1>
-<p th:text="${blog.content}"></p>
-<p th:text="${blog.date}"></p>
-<h5 th:text="${blog.author}"></h5>
+
+<p style="text-align: center" th:text="${category.name}"></p>
+<table class=" table table-row-cell">
+    <tr th:each="c : ${list}">
+        <a th:href="@{/detail(id=${c.id})}"> <p th:text="${c.name}"></p></a>
+    </tr>
+</table>
+
 </body>
 </html>

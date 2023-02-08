@@ -18,6 +18,14 @@ public class Category {
         this.blog = blog;
     }
 
+    public Set<Blog> getBlog() {
+        return blog;
+    }
+
+    public void setBlog(Set<Blog> blog) {
+        this.blog = blog;
+    }
+
     public int getId() {
         return id;
     }

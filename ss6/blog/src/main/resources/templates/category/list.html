@@ -25,6 +25,7 @@
         <th>Name</th>
         <th>Delete</th>
         <th>Edit</th>
+        <th>View</th>
     </tr>
     <tr th:each="c,stt : ${category}">
         <td th:text="${stt.count}"></td>
@@ -41,6 +42,7 @@
                 Edit
             </button>
         </td>
+        <td><button class="btn btn-success"><a th:href="@{category/view(id=${c.id})}">View</a></button></td>
     </tr>
 </table>
 <!-- modal delete-->
