@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+<p th:text="${mess}"></p>
+<form th:href="@{/update}" th:object="${songDto}" method="post">
+    <input th:field="*{id}" hidden>
+    <table class=" table ">
+        <tr>
+            <td>Name Song</td>
+            <td>
+                <input th:field="*{name}" th:placeholder="${songDto.name}">
+            </td>
+            <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
+        </tr>
+        <tr>
+            <td>Author</td>
+            <td>
+                <input th:field="*{author}" th:placeholder="${songDto.author}">
+            <td th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></td>
+            </td>
+        </tr>
+        <tr>
+            <td>Type</td>
+            <td>
+                <input th:field="*{type}" th:placeholder="${songDto.type}">
+            <td th:if="${#fields.hasErrors('author')}" th:errors="*{type}"></td>
+            </td>
+        </tr>
+    </table>
+    <button type="submit"> Save</button>
+</form>
+
+</body>
+</html>
