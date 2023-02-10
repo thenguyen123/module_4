@@ -42,11 +42,26 @@ public class SongController {
         modelAndView.addObject("songDto",songDto);
         return modelAndView;
     }
+//    @PostMapping("/create")
+//    public String save(@Validated @ModelAttribute SongDto songDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
+//        if(bindingResult.hasErrors()){
+//            model.addAttribute("songDto",songDto);
+//            model.addAttribute("hasErr","true");
+//            return "create";
+//        }
+//        Song song=new Song();
+//        BeanUtils.copyProperties(songDto,song);
+//        songService.save(song);
+//        redirectAttributes.addFlashAttribute("mess","Success");
+//        return "redirect:/song";
+//    }
     @PostMapping("/create")
     public String save(@Validated @ModelAttribute SongDto songDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
         if(bindingResult.hasErrors()){
             model.addAttribute("songDto",songDto);
-            return "create";
+            model.addAttribute("hasErr","true");
+            model.addAttribute("listSong",songService.findAll());
+            return  "list";
         }
         Song song=new Song();
         BeanUtils.copyProperties(songDto,song);

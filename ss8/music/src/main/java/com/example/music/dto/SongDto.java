@@ -8,16 +8,16 @@ public class SongDto {
     private int id;
     @NotEmpty(message = "không được để trống")
     @Size(max = 800 ,message = "kí tự không vượt quá 800")
-    @Pattern(regexp = "^[a-zA-Z0-9]+$",message = "không được chứa kí tự đặt biệt")
+    @Pattern(regexp = "^([\\p{L}\\s])+$",message = "không được chứa kí tự đặt biệt")
     private String name;
     @NotEmpty(message = "không được để trống")
     @Size(max = 300 ,message = "kí tự không vượt quá 300")
-    @Pattern(regexp = "^[a-zA-Z0-9]+$",message = "không được chứa kí tự đặt biệt")
+    @Pattern(regexp = "^([\\p{L}\\s])+$",message = "không được chứa kí tự đặt biệt")
     private String author;
 
     @NotEmpty(message = "không được để trống")
     @Size(max = 1000 ,message = "kí tự không vượt quá 1000")
-    @Pattern(regexp = "^[a-zA-Z0-9,]+$",message = "không được chứa kí tự đặt biệt")
+    @Pattern(regexp = "^([\\p{L}\\s])+$",message = "không được chứa kí tự đặt biệt")
     private String type;
 
     public SongDto() {

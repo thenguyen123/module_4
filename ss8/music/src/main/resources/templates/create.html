@@ -8,7 +8,7 @@
 </head>
 <body>
 <p th:text="${mess}"></p>
-<form th:href="@{/create}" th:object="${songDto}" method="post">
+<form th:action="@{/create}" th:object="${songDto}" method="post">
     <table>
         <tr>
             <td>Name Song</td>
