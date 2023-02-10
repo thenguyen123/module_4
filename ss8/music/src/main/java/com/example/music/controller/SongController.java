@@ -6,6 +6,9 @@ import com.example.music.service.ISongService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,9 +25,10 @@ public class SongController {
     @Autowired
     private ISongService songService;
     @GetMapping("/song")
-    public ModelAndView showList(){
+    public ModelAndView showList(@PageableDefault(size = 2,page = 0)Pageable pageable){
         ModelAndView modelAndView=new ModelAndView("list");
-        modelAndView.addObject("listSong",songService.findAll());
+        Page<Song> songPage=songService.findAll(pageable);
+        modelAndView.addObject("listSong",songPage);
         modelAndView.addObject("songDto",new SongDto());
         return modelAndView;
     }

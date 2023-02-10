@@ -40,7 +40,12 @@ public class UserController {
         }
         User user = new User();
         BeanUtils.copyProperties(userDto, user);
-        userService.save(user);
+     boolean check= userService.save(user);
+     if(!check){
+         model.addAttribute("userDto",userDto);
+         model.addAttribute("mess","Email đã tồn tại");
+         return "create";
+     }
         redirectAttributes.addFlashAttribute("mess","Success");
         return "redirect:/user";
     }

@@ -8,7 +8,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-public class UserDto  {
+public class UserDto implements Validator {
     @Size(min = 5, max = 45,message = "tên phải có độ dài tối thiểu bằng 5 và tối đa bằng 45")
     private String firstName;
     @Size(min = 5, max = 45 ,message = "tên phải có độ dài tối thiểu bằng 5 và tối đa bằng 45")
@@ -72,4 +72,13 @@ public class UserDto  {
     }
 
 
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+
+    }
 }

@@ -3,6 +3,8 @@ package com.example.music.service;
 import com.example.music.model.Song;
 import com.example.music.repository.ISongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,6 +19,7 @@ public class SongService implements ISongService {
         return songRepository.findAll();
     }
 
+
     @Override
     public void save(Song song) {
         songRepository.save(song);
@@ -30,5 +33,10 @@ public class SongService implements ISongService {
     @Override
     public Song findById(int id) {
         return songRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public Page<Song> findAll(Pageable pageable) {
+        return songRepository.findAll(pageable);
     }
 }

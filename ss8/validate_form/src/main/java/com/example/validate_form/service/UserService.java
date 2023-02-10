@@ -18,7 +18,13 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public void save(User user) {
-        userRepository.save(user);
+    public boolean save(User user) {
+        for (User  u: userRepository.findAll()) {
+            if(user.getEmail().equals(u.getEmail())){
+                return false;
+            }
+        } userRepository.save(user);
+        return true;
+
     }
 }

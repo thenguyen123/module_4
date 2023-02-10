@@ -10,34 +10,37 @@
         <tr>
             <td>Fist Name</td>
             <td><input th:field="*{firstName}" type="text"></td>
-            <td th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></td>
+            <td style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></td>
         </tr>
         <tr>
             <td>Last Name</td>
             <td><input th:field="*{lastName}" type="text"></td>
-            <td th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></td>
+            <td style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></td>
 
         </tr>
         <tr>
             <td>Phone</td>
             <td><input th:field="*{phoneNumber}" type="text"></td>
-            <td th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></td>
+            <td style="color: red" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></td>
 
         </tr>
         <tr>
             <td>Age</td>
             <td><input th:field="*{age}" type="number"></td>
-            <td th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></td>
+            <td style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></td>
 
         </tr>
         <tr>
             <td>Email</td>
-            <td><input th:field="*{email}" type="text"></td>
-            <td th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></td>
+            <td><input th:field="*{email}" type="text"> <span style="color: red" th:text="${mess}"></span>
+            </td>
+            <td style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></td>
+
         </tr>
 
     </table>
     <button type="submit">Save</button>
 </form>
+
 </body>
 </html>
