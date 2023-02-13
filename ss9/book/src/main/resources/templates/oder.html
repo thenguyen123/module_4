@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" >
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{oderBook}" method="post" th:object="${book}" >
+    <input th:field="*{id}" hidden>
+    <input th:field="*{name}" th:placeholder="${book.name}" readonly>
+    <input th:field="*{quantity}"th:placeholder="${book.quantity}" readonly>
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>
