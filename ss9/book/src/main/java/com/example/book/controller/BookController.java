@@ -22,9 +22,9 @@ import java.util.Random;
 @Controller
 public class BookController {
     @Autowired
-    IBookService bookService;
+   private IBookService bookService;
     @Autowired
-    IOderBookService oderBookService;
+   private IOderBookService oderBookService;
 
     @GetMapping("/book")
     public String showList(@PageableDefault(page = 0, size = 2) Pageable pageable, Model model) {

@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class OderBookService implements IOderBookService{
     @Autowired
-    IOderBookRepository oderBookRepository;
+   private IOderBookRepository oderBookRepository;
 
     @Override
     public OderBook findById(int id) {

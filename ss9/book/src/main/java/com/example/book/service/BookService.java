@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class BookService implements IBookService {
     @Autowired
-    IBookRepository bookRepository;
+   private IBookRepository bookRepository;
     @Override
     public Page<Book> findAll(Pageable pageable) {
         return bookRepository.findAll(pageable);
