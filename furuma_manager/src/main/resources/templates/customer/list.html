@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+          crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="~{navbar :: header}"></div>
+<button class="btn btn-primary" data-bs-target="#create" data-bs-toggle="modal" type="button">Create</button>
+<table class="table table-row-cell">
+    <tr>
+        <th>STT</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th>Gender</th>
+        <th>Phone Number</th>
+        <th>Day Of Birth</th>
+        <th>Customer Type</th>
+    </tr>
+    <tr th:each="customer,stt : ${customers}" th:if="${customer.isDelete()==true}">
+        <td th:text="${stt.count}"></td>
+        <td th:text="${customer.name}"></td>
+        <td th:text="${customer.address}"></td>
+        <td th:text="${customer.email}"></td>
+        <td th:text="${customer.gender == 1} ? Nam : Nữ "></td>
+        <td th:text="${customer.phoneNumber}"></td>
+        <td th:text="${customer.dayOfBrith}"></td>
+        <td th:text="${customer.customerType.name}"></td>
+    </tr>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="create">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <h3 class="align-text-top">Create Customer</h3>
+            <form method="post" th:object="${customer}" th:action="@{/customer/create}">
+                <div>
+                    <span class="text"> Name</span>
+                    <input class="form-control" type="text" th:field="*{name}">
+                    <span class="text">Day Of Brith</span>
+                    <input class="form-control" type="date" th:field="*{dayOfBrith}">
+                    <span class="text">Id Card</span>
+                    <input class="form-control" type="text" th:field="*{idCard}">
+                    <span class="text">Phone Number</span>
+                    <input class="form-control" type="text" th:field="*{phoneNumber}">
+                    <span class="text">Email</span>
+                    <input class="form-control" type="email" th:field="*{email}">
+                    <span class="text">Address</span>
+                    <input class="form-control" type="text" th:field="*{address}">
+                    <span class="text">Type</span>
+                    <select th:field="*{customerType}">
+                        <option th:each="customerType: ${customerTypes}" th:text="${customerType.name}"
+                                th:value="${customerType.id}"></option>
+                    </select>
+                    <br>
+                    <span class="radio">Gender</span>
+                    <input type="radio" th:field="*{gender}"  th:value="1" th:text="Nam">
+                    <input type="radio" th:field="*{gender}"  th:value="0" th:text="Nữ">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-primary">Save</button>
+                    <button class="btn btn-outline-primary">close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="col col-md-12">
+    <a class="btn btn-primary" th:href="@{customer(page=${customers.number - 1})}" th:if="${customers.hasPrevious()}">Previous</a>
+    <span th:text="${customers.number +1}"></span>/<span th:text="${customers.totalPages}"></span>
+    <a class="btn btn-primary" th:href="@{customer(page=${customers.number + 1 })}"
+       th:if="${customers.hasNext()}">Next</a>
+</div>
+<div th:replace="~{navbar :: footer}"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</body>
+</html>
