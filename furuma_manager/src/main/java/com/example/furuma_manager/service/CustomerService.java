@@ -14,8 +14,8 @@ public class CustomerService implements ICustomerService  {
     private ICustomerRepository customerRepository;
 
     @Override
-    public Page<Customer> findAll(Pageable pageable) {
-        return customerRepository.findAll(pageable);
+    public Page<Customer> findAll( String name, String email, String type,Pageable pageable) {
+        return customerRepository.findAll(name, email, type, pageable);
     }
 
     @Override
@@ -24,5 +24,30 @@ public class CustomerService implements ICustomerService  {
             customerRepository.save(customer);
             return true;
         } return false;
+    }
+
+    @Override
+    public boolean deleteById(int id) {
+        Customer customer=findById(id);
+        if(customer==null){
+            return false;
+        }
+        customer.setDelete(true);
+      customerRepository.save(customer);
+        return true;
+    }
+
+    @Override
+    public boolean update(Customer customer) {
+        if(customer==null){
+            return false;
+        }
+      customerRepository.save(customer);
+        return true;
+    }
+
+    @Override
+    public Customer findById(int id) {
+        return customerRepository.findById(id).orElse(null);
     }
 }

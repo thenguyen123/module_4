@@ -8,6 +8,8 @@ public class Position {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(columnDefinition = "varchar(225) unique")
+
     private String name;
     @OneToMany(mappedBy = "position")
     private Set<Employee> employeeSet;

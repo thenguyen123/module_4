@@ -8,11 +8,19 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(columnDefinition = "varchar(225) not null")
     private String name;
+    @Column(columnDefinition = "varchar(225) not null")
+
     private String dateOfBirth;
+    @Column(columnDefinition = "varchar(225) unique ")
     private String idCard;
+
+    @Column(columnDefinition = "varchar(225) not null")
     private double salary;
+    @Column(columnDefinition = "varchar(225) unique")
     private String phoneNumber;
+    @Column(columnDefinition = "varchar(225) unique")
     private String email;
     private String address;
     @ManyToOne

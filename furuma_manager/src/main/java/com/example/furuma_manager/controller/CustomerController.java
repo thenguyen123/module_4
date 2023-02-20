@@ -12,9 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -27,22 +25,49 @@ public class CustomerController {
     private ICustomerService customerService;
     @Autowired
     private ICustomerTypeService customerTypeService;
+
     @GetMapping("")
-    public String showAll(@PageableDefault(size = 5,page = 0, sort = "isDelete" , direction = Sort.Direction.DESC)Pageable pageable, Model model){
-        Page<Customer> page=customerService.findAll(pageable);
-        List<CustomerType> customerTypeList=customerTypeService.findAll();
-        model.addAttribute("customerTypes",customerTypeList);
-        model.addAttribute("customers",page);
-        Customer customer=new Customer();
-        model.addAttribute("customer",customer);
+    public String showAll(@RequestParam(defaultValue = "",required = false)String name,@RequestParam(defaultValue = "",required = false)String email,@RequestParam(defaultValue = "" ,required = false)String typeCustomer, @PageableDefault(size = 5, page = 0) Pageable pageable, Model model) {
+        Page<Customer> page = customerService.findAll(name, email, typeCustomer, pageable);
+        List<CustomerType> customerTypeList = customerTypeService.findAll();
+        model.addAttribute("name",name);
+        model.addAttribute("email",email);
+        model.addAttribute("type",typeCustomer);
+        model.addAttribute("customerTypes", customerTypeList);
+        model.addAttribute("customers", page);
+        Customer customer = new Customer();
+        model.addAttribute("customer", customer);
         return "customer/list";
-    }@PostMapping("create")
-    public String save(Customer customer, RedirectAttributes redirectAttributes){
-        customer.setDelete(true);
-        boolean check= customerService.save(customer);
-        if (check){
-            redirectAttributes.addFlashAttribute("mess","fail");
-        } redirectAttributes.addFlashAttribute("mess","success");
+    }
+
+    @PostMapping("create")
+    public String save(Customer customer, RedirectAttributes redirectAttributes) {
+        boolean check = customerService.save(customer);
+        if (!check) {
+            redirectAttributes.addFlashAttribute("mess", "fail");
+        }
+        redirectAttributes.addFlashAttribute("mess", "success");
         return "redirect:/customer";
     }
+
+    @PostMapping("delete")
+    public String deleteById(@RequestParam int idDelete, RedirectAttributes redirectAttributes) {
+        boolean check = customerService.deleteById(idDelete);
+        redirectAttributes.addFlashAttribute("mess", "success");
+        if (!check) {
+            redirectAttributes.addFlashAttribute("mess", "fail");
+        }
+        return "redirect:/customer";
+    }
+
+    @PostMapping("edit")
+    public String saveCustomer(@ModelAttribute Customer customer, RedirectAttributes redirectAttributes) {
+        boolean check = customerService.update(customer);
+        redirectAttributes.addFlashAttribute("mess", "success");
+        if (!check) {
+            redirectAttributes.addFlashAttribute("mess", "fail");
+        }
+        return "redirect:/customer";
+    }
+
 }

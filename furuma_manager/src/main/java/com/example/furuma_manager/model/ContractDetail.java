@@ -14,7 +14,6 @@ public class ContractDetail {
     @ManyToOne
     @JoinColumn(name = "contract_id",referencedColumnName = "id")
     private Contract contract;
-
     private boolean isDelete;
 
     public ContractDetail(int id, String quantity, AttachFacility attachFacility, Contract contract, boolean isDelete) {

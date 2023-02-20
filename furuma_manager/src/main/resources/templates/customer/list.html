@@ -8,32 +8,125 @@
           crossorigin="anonymous">
 </head>
 <body>
-<div th:replace="~{navbar :: header}"></div>
+<div>
+    <div class="row bg-primary ">
+        <p>Weather</p>
+    </div>
+
+    <div class="row header h-20 bg-white">
+        <div class="col 12 col-md-3 col-sm-6"><img
+                th:src="@{https://furamavietnam.com/wp-content/uploads/2018/08/logo.png}" alt="" height="100"/></div>
+        <div class="col-md-2 col-sm-6  "><img
+                th:src="@{https://furamavietnam.com/wp-content/uploads/2018/08/widget-tripadvisor-rating.png}"
+                width="50%" height="30%"/>
+            <p>Review </p>
+        </div>
+        <div class="col-md-3 col-sm-6 fst-italic "><p> Address: 103 – 105 Võ Nguyên Giáp Street, Khuê Mỹ wards, Ngũ hành
+            Sơn
+            District,
+            Đà Nẵng city, Việt Nam
+            7.0 km from International Airport Đà Nẵng</p></div>
+        <div class="col-md-3 col-sm-5">
+            <p>
+                Phone: 84-236-3847 333/888 reservation@furamavietnam.com</p>
+        </div>
+        <div class="col-md-1 col-sm-1 ">
+            <p>Nguyen The </p>
+
+        </div>
+
+    </div>
+
+    <div class="row headerlink ">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary ">
+            <div class="container-fluid ">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-0 mb-lg-2">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/employee">Employee</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/customer">Customer</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="facility.html">Service</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled">Contract</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/facility">Facility</a>
+                        </li>
+
+                    </ul>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="name" aria-label="Search"
+                               name="name">
+                        <input class="form-control me-2" type="search" placeholder="email" aria-label="Search"
+                               name="email">
+                        <select name="typeCustomer">
+                            <option value="" th:text="Type"></option>
+                            <option th:each="customerType: ${customerTypes}" th:text="${customerType.name}"
+                                    th:value="${customerType.id}"></option>
+                        </select>
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
 <button class="btn btn-primary" data-bs-target="#create" data-bs-toggle="modal" type="button">Create</button>
+<p th:text="${mess}"></p>
 <table class="table table-row-cell">
     <tr>
         <th>STT</th>
         <th>Name</th>
+        <th>Id Card</th>
         <th>Address</th>
         <th>Email</th>
         <th>Gender</th>
         <th>Phone Number</th>
         <th>Day Of Birth</th>
         <th>Customer Type</th>
+        <th>Delete</th>
+        <th>Edit</th>
     </tr>
-    <tr th:each="customer,stt : ${customers}" th:if="${customer.isDelete()==true}">
+    <tr th:each="customer,stt : ${customers}">
         <td th:text="${stt.count}"></td>
         <td th:text="${customer.name}"></td>
+        <td th:text="${customer.idCard}"></td>
         <td th:text="${customer.address}"></td>
         <td th:text="${customer.email}"></td>
         <td th:text="${customer.gender == 1} ? Nam : Nữ "></td>
         <td th:text="${customer.phoneNumber}"></td>
         <td th:text="${customer.dayOfBrith}"></td>
         <td th:text="${customer.customerType.name}"></td>
+        <td>
+            <button class="btn btn-outline-primary" th:attr="onclick=|isDelete('${customer.id}','${customer.name}')|"
+                    data-bs-toggle="modal" data-bs-target="#deleteModal">Delete
+            </button>
+        </td>
+        <td>
+            <button class="btn btn-outline-primary"
+                    th:attr="onclick=|editCustomer('${customer.id}','${customer.name}','${customer.phoneNumber}','${customer.idCard}',
+       '${customer.email}','${customer.dayOfBrith}','${customer.address}','${customer.customerType.name}')|" )
+                    data-bs-toggle="modal" data-bs-target="#edit">Edit
+            </button>
+        </td>
     </tr>
 </table>
 
-<!-- Modal -->
+<!-- Modal create-->
 <div class="modal fade" id="create">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -59,28 +152,108 @@
                     </select>
                     <br>
                     <span class="radio">Gender</span>
-                    <input type="radio" th:field="*{gender}"  th:value="1" th:text="Nam">
-                    <input type="radio" th:field="*{gender}"  th:value="0" th:text="Nữ">
+                    <input type="radio" th:field="*{gender}" th:value="1" th:text="Nam">
+                    <input type="radio" th:field="*{gender}" th:value="0" th:text="Nữ">
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-outline-primary">Save</button>
-                    <button class="btn btn-outline-primary">close</button>
+                    <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">close</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<!--modal edit-->
+<div class="modal fade" id="edit">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <h3 class="align-text-top">Edit Customer</h3>
+            <form method="post" th:object="${customer}" th:action="@{/customer/edit}">
+                <div>
 
-
-<div class="col col-md-12">
-    <a class="btn btn-primary" th:href="@{customer(page=${customers.number - 1})}" th:if="${customers.hasPrevious()}">Previous</a>
+                    <input th:field="*{id}" hidden id="id">
+                    <span class="text"> Name</span>
+                    <input class="form-control" type="text" id="nameEdit" th:field="*{name}">
+                    <span class="text">Day Of Brith</span>
+                    <input class="form-control" type="date" id="day" th:field="*{dayOfBrith}">
+                    <span class="text">Id Card</span>
+                    <input class="form-control" type="text" id="idCardEdit" th:field="*{idCard}">
+                    <span class="text">Phone Number</span>
+                    <input class="form-control" type="text" id="phone" th:field="*{phoneNumber}">
+                    <span class="text">Email</span>
+                    <input class="form-control" type="email" id="emailEdit" th:field="*{email}">
+                    <span class="text">Address</span>
+                    <input class="form-control" type="text" id="addressEdit" th:field="*{address}">
+                    <span class="text">Type</span>
+                    <select th:field="*{customerType}">
+                        <option th:each="customerType: ${customerTypes}" th:text="${customerType.name}"
+                                th:value="${customerType.id}" name="typeCustomer"></option>
+                    </select>
+                    <br>
+                    <span class="radio">Gender</span>
+                    <input type="radio" th:field="*{gender}" th:value="1" th:text="Nam">
+                    <input type="radio" th:field="*{gender}" th:value="0" th:text="Nữ">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-primary" type="submit">Save</button>
+                    <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--Modal delete-->
+<div id="deleteModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <h3 class="text-center"> Create Customer</h3>
+            <form th:action="@{customer/delete}" method="post">
+                <div class="modal-body">
+                    <p>Bạn có muốn xóa</p>
+                    <span id="nameDelete"></span>
+                    <input name="idDelete" id="idDelete" hidden>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-outline-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--phân trang-->
+<div class="col-md-12 col-sm-12 " style="float: right;">
+    <a class="btn btn-primary"
+       th:href="@{customer(page=${customers.number - 1},name=${name},email=${email},typeCustomer=${type})}"
+       th:if="${customers.hasPrevious()}">Previous</a>
     <span th:text="${customers.number +1}"></span>/<span th:text="${customers.totalPages}"></span>
-    <a class="btn btn-primary" th:href="@{customer(page=${customers.number + 1 })}"
+    <a class="btn btn-primary"
+       th:href="@{customer(page=${customers.number + 1 },name=${name},email=${email},typeCustomer=${type})}"
        th:if="${customers.hasNext()}">Next</a>
 </div>
+<br>
 <div th:replace="~{navbar :: footer}"></div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
 </body>
+<script>
+    function isDelete(id, name) {
+        document.getElementById("idDelete").value = id;
+        document.getElementById("nameDelete").innerText = name;
+    }
+
+</script>
+<script>
+    function editCustomer(id, name, phone, idCard, email, day, address, typeCustomer) {
+        document.getElementById("id").value = id;
+        document.getElementById("nameEdit").value = name;
+        document.getElementById("phone").value = phone;
+        document.getElementById("idCardEdit").value = idCard;
+        document.getElementById("emailEdit").value = email;
+        document.getElementById("day").value = day;
+        document.getElementById("addressEdit").value = address;
+        document.getElementById("typeCustomer").value = typeCustomer;
+    }
+</script>
 </html>

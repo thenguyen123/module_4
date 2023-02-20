@@ -1,5 +1,6 @@
 package com.example.furuma_manager.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;

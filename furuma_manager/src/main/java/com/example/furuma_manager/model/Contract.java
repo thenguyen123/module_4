@@ -9,9 +9,9 @@ public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(columnDefinition = "datetime")
+    @Column(columnDefinition = "date")
     private String startDate;
-    @Column(columnDefinition = "datetime")
+    @Column(columnDefinition = "date")
     private String endDate;
     private double deposit;
     @ManyToOne
