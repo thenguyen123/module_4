@@ -10,4 +10,5 @@ public interface ICustomerService {
     boolean deleteById(int id);
     boolean update(Customer customer);
     Customer findById(int id);
+    String checkData(String email,String idCard,String phone);
 }

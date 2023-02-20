@@ -27,12 +27,12 @@ public class CustomerController {
     private ICustomerTypeService customerTypeService;
 
     @GetMapping("")
-    public String showAll(@RequestParam(defaultValue = "",required = false)String name,@RequestParam(defaultValue = "",required = false)String email,@RequestParam(defaultValue = "" ,required = false)String typeCustomer, @PageableDefault(size = 5, page = 0) Pageable pageable, Model model) {
+    public String showAll(@RequestParam(defaultValue = "", required = false) String name, @RequestParam(defaultValue = "", required = false) String email, @RequestParam(defaultValue = "", required = false) String typeCustomer, @PageableDefault(size = 5, page = 0) Pageable pageable, Model model) {
         Page<Customer> page = customerService.findAll(name, email, typeCustomer, pageable);
         List<CustomerType> customerTypeList = customerTypeService.findAll();
-        model.addAttribute("name",name);
-        model.addAttribute("email",email);
-        model.addAttribute("type",typeCustomer);
+        model.addAttribute("name", name);
+        model.addAttribute("email", email);
+        model.addAttribute("type", typeCustomer);
         model.addAttribute("customerTypes", customerTypeList);
         model.addAttribute("customers", page);
         Customer customer = new Customer();
@@ -42,6 +42,12 @@ public class CustomerController {
 
     @PostMapping("create")
     public String save(Customer customer, RedirectAttributes redirectAttributes) {
+        String checkData = customerService.checkData(customer.getEmail(), customer.getIdCard(), customer.getPhoneNumber());
+        if (checkData != null) {
+            redirectAttributes.addFlashAttribute("error", checkData);
+            redirectAttributes.addFlashAttribute("hasErr", "true");
+            return "redirect:/customer";
+        }
         boolean check = customerService.save(customer);
         if (!check) {
             redirectAttributes.addFlashAttribute("mess", "fail");

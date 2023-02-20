@@ -1,5 +1,7 @@
 package com.example.furuma_manager.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
@@ -10,6 +12,7 @@ import java.util.Set;
 public class User {
     @Id
     private String username;
+    @JsonIgnore
     private String password;
     @OneToMany(mappedBy = "user")
     private Set<UserRole> userRoles;

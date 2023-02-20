@@ -70,10 +70,10 @@
                     </ul>
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="name" aria-label="Search"
-                               name="name">
+                               name="name" th:value="${name}" >
                         <input class="form-control me-2" type="search" placeholder="email" aria-label="Search"
-                               name="email">
-                        <select name="typeCustomer">
+                               name="email" th:value="${email}">
+                        <select name="typeCustomer" th:value="${type}">
                             <option value="" th:text="Type"></option>
                             <option th:each="customerType: ${customerTypes}" th:text="${customerType.name}"
                                     th:value="${customerType.id}"></option>
@@ -127,22 +127,23 @@
 </table>
 
 <!-- Modal create-->
-<div class="modal fade" id="create">
+<div th:class="${hasErr=='true'? 'modal fade show':'modal fade'}"
+     th:style="${hasErr =='true' ?'display:block':'display:none'}" id="create">
     <div class="modal-dialog">
         <div class="modal-content">
             <h3 class="align-text-top">Create Customer</h3>
             <form method="post" th:object="${customer}" th:action="@{/customer/create}">
                 <div>
                     <span class="text"> Name</span>
-                    <input class="form-control" type="text" th:field="*{name}">
+                    <input class="form-control" type="text" th:field="*{name}" required>
                     <span class="text">Day Of Brith</span>
-                    <input class="form-control" type="date" th:field="*{dayOfBrith}">
+                    <input class="form-control" type="date" th:field="*{dayOfBrith}" required>
                     <span class="text">Id Card</span>
-                    <input class="form-control" type="text" th:field="*{idCard}">
+                    <input class="form-control" type="text" th:field="*{idCard}" required>
                     <span class="text">Phone Number</span>
-                    <input class="form-control" type="text" th:field="*{phoneNumber}">
+                    <input class="form-control" type="text" th:field="*{phoneNumber}" required>
                     <span class="text">Email</span>
-                    <input class="form-control" type="email" th:field="*{email}">
+                    <input class="form-control" type="email" th:field="*{email}" required>
                     <span class="text">Address</span>
                     <input class="form-control" type="text" th:field="*{address}">
                     <span class="text">Type</span>
@@ -150,6 +151,7 @@
                         <option th:each="customerType: ${customerTypes}" th:text="${customerType.name}"
                                 th:value="${customerType.id}"></option>
                     </select>
+                    <p style="color: red" th:text="${error}"></p>
                     <br>
                     <span class="radio">Gender</span>
                     <input type="radio" th:field="*{gender}" th:value="1" th:text="Nam">
@@ -157,14 +159,16 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-outline-primary">Save</button>
-                    <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">close</button>
+                    <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal"><a
+                            th:href="@{/customer}">close</a></button>
                 </div>
             </form>
         </div>
     </div>
 </div>
 <!--modal edit-->
-<div class="modal fade" id="edit">
+<div class="modal fade" id="edit" th:class="${hasErr=='true'? 'modal fade show':'modal fade'}"
+     th:style="${hasErr =='true' ?'display:block':'display:none'}">
     <div class="modal-dialog">
         <div class="modal-content">
             <h3 class="align-text-top">Edit Customer</h3>
@@ -173,13 +177,13 @@
 
                     <input th:field="*{id}" hidden id="id">
                     <span class="text"> Name</span>
-                    <input class="form-control" type="text" id="nameEdit" th:field="*{name}">
+                    <input class="form-control" type="text" id="nameEdit" th:field="*{name}" required>
                     <span class="text">Day Of Brith</span>
-                    <input class="form-control" type="date" id="day" th:field="*{dayOfBrith}">
+                    <input class="form-control" type="date" id="day" th:field="*{dayOfBrith}" required>
                     <span class="text">Id Card</span>
-                    <input class="form-control" type="text" id="idCardEdit" th:field="*{idCard}">
+                    <input class="form-control" type="text" id="idCardEdit" th:field="*{idCard}" required>
                     <span class="text">Phone Number</span>
-                    <input class="form-control" type="text" id="phone" th:field="*{phoneNumber}">
+                    <input class="form-control" type="text" id="phone" th:field="*{phoneNumber}" required>
                     <span class="text">Email</span>
                     <input class="form-control" type="email" id="emailEdit" th:field="*{email}">
                     <span class="text">Address</span>
@@ -189,6 +193,7 @@
                         <option th:each="customerType: ${customerTypes}" th:text="${customerType.name}"
                                 th:value="${customerType.id}" name="typeCustomer"></option>
                     </select>
+                    <p style="color: red" th:text="${error}"></p>
                     <br>
                     <span class="radio">Gender</span>
                     <input type="radio" th:field="*{gender}" th:value="1" th:text="Nam">
@@ -196,7 +201,8 @@
                 </div>
                 <div class="modal-footer">
                     <button class="btn btn-outline-primary" type="submit">Save</button>
-                    <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">Close</button>
+                    <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal"><a
+                            th:href="@{/customer}">Close</a></button>
                 </div>
             </form>
         </div>
