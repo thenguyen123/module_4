@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -46,6 +47,17 @@ public class ContractController {
         if (!check) {
             mess="fail";
         }redirectAttributes.addFlashAttribute("mess",mess);
+        return "redirect:/contract";
+    }
+    @GetMapping("/show")
+    public String showFacility(@RequestParam int id, RedirectAttributes redirectAttributes,Model model){
+        List<ContractDetail> contractDetail=contractDetailService.findById(id);
+        if(contractDetail!=null){
+            redirectAttributes.addFlashAttribute("pass","true");
+            redirectAttributes.addFlashAttribute("contractDetailShow",contractDetail);
+
+            return "redirect:/contract";
+        }
         return "redirect:/contract";
     }
 }

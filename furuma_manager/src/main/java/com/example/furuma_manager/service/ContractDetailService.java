@@ -5,6 +5,8 @@ import com.example.furuma_manager.repository.IContractDetailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ContractDetailService implements IContractDetailService{
     @Autowired
@@ -15,5 +17,10 @@ public class ContractDetailService implements IContractDetailService{
             return false;
         }contractDetailRepository.save(contractDetail);
         return true;
+    }
+
+    @Override
+    public List<ContractDetail> findById(int id) {
+        return contractDetailRepository.findByContract_Id(id);
     }
 }
