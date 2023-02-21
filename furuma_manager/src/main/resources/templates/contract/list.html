@@ -27,10 +27,10 @@
         <td th:text="${contract.getContractDeposit()}"></td>
         <td th:text="${contract.getTotal()}"></td>
         <td>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add" th:attr="onclick=|createContractDetail(${contract.getContractId()})|">
                 +
             </button>
-            <a th:href="@{contract/show(id=${contract.getContractId()})}" class=" btn btn-outline-primary">
+            <a th:href="@{contract/show(id=${contract.getContractId()},page=${contractDtoPage.number})}" class=" btn btn-outline-primary">
                 Attach Facility
             </a>
         </td>
@@ -45,6 +45,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form th:object="${contractDetail}" th:action="@{contract/create}" method="post">
+             <input th:field="*{contract}" id="idCreate">
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-3">Name:</div>
@@ -57,7 +58,7 @@
                     <div class="row">
                         <div class="col-md-3">Quantity</div>
                         <div class="col-md-9">
-                            <input type="number" th:field="*{quantity}">
+                            <input type="number" th:field="*{quantity}" th:placeholder="1">
                         </div>
                     </div>
 
@@ -73,13 +74,12 @@
 <div>
     <div th:class="${pass=='true'? 'modal fade show':'modal fade'}"
          th:style="${pass =='true' ?'display:block':'display:none'}" class="modal fade" id="exampleModal" tabindex="-1"
-         aria-labelledby="exampleModalLabel" aria-hidden="true">
+         aria-labelledby="exampleModalLabel" >
         <div class="modal-dialog">
-            <div class="modal-content bg-success-emphasis">
+            <div class="modal-content ">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5">Attach Facility</h1>
                 </div>
-
                 <table>
                     <tr>
                         <th>Name</th>
@@ -93,7 +93,7 @@
                     </tr>
                 </table>
                 <div class="modal-footer">
-                    <button th:attr="onclick=|closeModal()|" class="btn btn-outline-primary">Close</button>
+                    <a class="btn btn-outline-primary" th:href="@{contract(page=${contractDtoPage.number})}">Close</a>
                 </div>
             </div>
         </div>
@@ -105,11 +105,14 @@
         <a class="btn btn-primary" th:href="@{contract(page=${contractDtoPage.number + 1})}"
            th:if="${contractDtoPage.hasNext()}">Next</a>
     </div>
+</div>
     <div th:insert="~{navbar :: footer}"></div>
+
 </body>
 <script>
-    function closeModal(){
-        document.getElementById("exampleModal").style.display="none"
+
+    function createContractDetail(id){
+        document.getElementById("idCreate").value=id;
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"

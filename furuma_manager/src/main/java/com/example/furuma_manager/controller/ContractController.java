@@ -31,32 +31,35 @@ public class ContractController {
     private IAttachFacilityService attachFacilityService;
 
     @GetMapping("")
-    public String showAll(Model model, @PageableDefault(size = 4, page = 0) Pageable pageable) {
+    public String showAll(Model model, @PageableDefault(size = 6, page = 0) Pageable pageable) {
         Page<IContractDto> contractDtoPage = contractService.getAllContract(pageable);
-        List<AttachFacility> attachFacilities=attachFacilityService.findAll();
-        ContractDetail  contractDetail=new ContractDetail();
-        model.addAttribute("contractDetail",contractDetail);
-        model.addAttribute("listAttach",attachFacilities);
+        List<AttachFacility> attachFacilities = attachFacilityService.findAll();
+        ContractDetail contractDetail = new ContractDetail();
+        model.addAttribute("contractDetail", contractDetail);
+        model.addAttribute("listAttach", attachFacilities);
         model.addAttribute("contractDtoPage", contractDtoPage);
         return "contract/list";
     }
+
     @PostMapping("create")
-    public  String save(ContractDetail contractDetail, RedirectAttributes redirectAttributes){
-        boolean check=contractDetailService.save(contractDetail);
-        String mess="success";
+    public String save(ContractDetail contractDetail, RedirectAttributes redirectAttributes) {
+        boolean check = contractDetailService.save(contractDetail);
+        String mess = "success";
         if (!check) {
-            mess="fail";
-        }redirectAttributes.addFlashAttribute("mess",mess);
+            mess = "fail";
+        }
+        redirectAttributes.addFlashAttribute("mess", mess);
         return "redirect:/contract";
     }
-    @GetMapping("/show")
-    public String showFacility(@RequestParam int id, RedirectAttributes redirectAttributes,Model model){
-        List<ContractDetail> contractDetail=contractDetailService.findById(id);
-        if(contractDetail!=null){
-            redirectAttributes.addFlashAttribute("pass","true");
-            redirectAttributes.addFlashAttribute("contractDetailShow",contractDetail);
 
-            return "redirect:/contract";
+    @GetMapping("/show")
+    public String showFacility(@RequestParam int id,@RequestParam int page, RedirectAttributes redirectAttributes, Model model) {
+        List<ContractDetail> contractDetail = contractDetailService.findById(id);
+        if (contractDetail != null) {
+            redirectAttributes.addFlashAttribute("pass", "true");
+            redirectAttributes.addFlashAttribute("contractDetailShow", contractDetail);
+
+            return "redirect:/contract?page="+page;
         }
         return "redirect:/contract";
     }
