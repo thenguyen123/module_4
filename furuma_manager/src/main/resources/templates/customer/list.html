@@ -78,10 +78,10 @@
                                name="name" th:value="${name}" >
                         <input class="form-control me-2" type="search" placeholder="email" aria-label="Search"
                                name="email" th:value="${email}">
-                        <select name="typeCustomer" th:value="${type}">
-                            <option value="" th:text="Type"></option>
+                        <select name="typeCustomer">
+                            <option th:value="${type}" th:text="Type"></option>
                             <option th:each="customerType: ${customerTypes}" th:text="${customerType.name}"
-                                    th:value="${customerType.id}"></option>
+                                    th:value="${customerType.name}"></option>
                         </select>
                         <button class="btn btn-outline-success" type="submit">Search</button>
                     </form>
