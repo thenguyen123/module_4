@@ -293,7 +293,7 @@
             <div class="modal-body">
                 <form method="post" th:action="@{facility/edit}" th:object="${facility}">
                     <input hidden th:field="*{id}" id="id">
-                    <input th:field="*{facilityType.id}" id="facilityTypeEdit">
+                    <input th:field="*{facilityType.id}" id="facilityTypeEdit" hidden>
                     <div class="row">
                         <div class="col-md-3">
                             <p>Name</p>

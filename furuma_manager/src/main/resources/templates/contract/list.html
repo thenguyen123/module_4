@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+<div th:insert="~{navbar :: header}"></div>
+<table class="table table-row-cell">
+  <tr>
+    <th>Name Customer</th>
+    <th>Name Facility</th>
+    <th>End Day</th>
+    <th>Start Day</th>
+    <th>Deposition</th>
+    <th>Total</th>
+  </tr>
+  <tr th:each="contract :${contractDtoPage} ">
+    <td th:text="${contract.getCustomerName()}"></td>
+    <td th:text="${contract.getFacilityName()}"></td>
+    <td th:text="${contract.getContractEndDay()}"></td>
+    <td th:text="${contract.getContractStartDay()}"></td>
+    <td th:text="${contract.getContractDeposit()}"></td>
+    <td th:text="${contract.getTotal()}"></td>
+  </tr>
+</table>
+<div >
+  <a th:href="@{contract(page=${contractDtoPage.number - 1})}" th:if="${contractDtoPage.hasPrevious()}">Previous</a>
+  <span th:text="${contractDtoPage.number + 1}"></span>/<span th:text="${contractDtoPage.totalPages}"></span>
+  <a th:href="@{contract(page=${contractDtoPage.number + 1})}" th:if="${contractDtoPage.hasNext()}">Next</a>
+</div>
+<div th:insert="~{navbar :: footer}"></div>
+</body>
+</html>
