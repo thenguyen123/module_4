@@ -3,117 +3,473 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-        rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
-        crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+          crossorigin="anonymous">
 </head>
 <body>
 <div>
-  <div class="row bg-primary ">
-    <p>Weather</p>
-  </div>
-  <div class="row header h-20 bg-white">
-    <div class="col 12 col-md-3 col-sm-6"><img
-            th:src="@{https://furamavietnam.com/wp-content/uploads/2018/08/logo.png}" alt="" height="100"/></div>
-    <div class="col-md-2 col-sm-6  "><img
-            th:src="@{https://furamavietnam.com/wp-content/uploads/2018/08/widget-tripadvisor-rating.png}"
-            width="50%" height="30%"/>
-      <p>Review </p>
+    <div class="row bg-primary ">
+        <p>Weather</p>
     </div>
-    <div class="col-md-3 col-sm-6 fst-italic "><p> Address: 103 – 105 Võ Nguyên Giáp Street, Khuê Mỹ wards, Ngũ hành
-      Sơn
-      District,
-      Đà Nẵng city, Việt Nam
-      7.0 km from International Airport Đà Nẵng</p></div>
-    <div class="col-md-3 col-sm-5">
-      <p>
-        Phone: 84-236-3847 333/888 reservation@furamavietnam.com</p>
-    </div>
-    <div class="col-md-1 col-sm-1 ">
-      <p>Nguyen The </p>
-    </div>
-  </div>
-
-  <div class="row headerlink ">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary ">
-      <div class="container-fluid ">
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-0 mb-lg-2">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="/employee">Employee</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/customer">Customer</a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link disabled" href="facility.html">Service</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled">Contract</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link " href="/facility">Facility</a>
-            </li>
-
-          </ul>
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="name" aria-label="Search"
-                   name="name" th:value="${name}" >
-            <select name="type" >
-              <option value="" th:text="Type"></option>
-              <option th:each="facilityType: ${facilityTypes}" th:text="${facilityType.name}"
-                      th:value="${facilityType.id}" ></option>
-            </select>
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
+    <div class="row header h-20 bg-white">
+        <div class="col 12 col-md-3 col-sm-6"><img
+                th:src="@{https://furamavietnam.com/wp-content/uploads/2018/08/logo.png}" alt="" height="100"/></div>
+        <div class="col-md-2 col-sm-6  "><img
+                th:src="@{https://furamavietnam.com/wp-content/uploads/2018/08/widget-tripadvisor-rating.png}"
+                width="50%" height="30%"/>
+            <p>Review </p>
         </div>
-      </div>
-    </nav>
-  </div>
+        <div class="col-md-3 col-sm-6 fst-italic "><p> Address: 103 – 105 Võ Nguyên Giáp Street, Khuê Mỹ wards, Ngũ hành
+            Sơn
+            District,
+            Đà Nẵng city, Việt Nam
+            7.0 km from International Airport Đà Nẵng</p></div>
+        <div class="col-md-3 col-sm-5">
+            <p>
+                Phone: 84-236-3847 333/888 reservation@furamavietnam.com</p>
+        </div>
+        <div class="col-md-1 col-sm-1 ">
+            <p>Nguyen The </p>
+        </div>
+    </div>
+
+    <div class="row headerlink ">
+        <nav class="navbar navbar-expand-lg bg-body-tertiary ">
+            <div class="container-fluid ">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-0 mb-lg-2">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="/employee">Employee</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/customer">Customer</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="facility.html">Service</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled">Contract</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="/facility">Facility</a>
+                        </li>
+
+                    </ul>
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2" type="search" placeholder="name" aria-label="Search"
+                               name="name" th:value="${name}">
+                        <select name="type">
+                            <option value="" th:text="Type"></option>
+                            <option th:each="facilityType: ${facilityTypes}" th:text="${facilityType.name}"
+                                    th:value="${facilityType.id}"></option>
+                        </select>
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </div>
 </div>
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Create
+</button>
+<p th:text="${mess}" style="color: red"></p>
 <table class="table table-row-cell">
-  <tr>
-    <th>Name</th>
-    <th>Cost</th>
-    <th>Area</th>
-    <th>Number of Floors</th>
-    <th>Rent Type</th>
-    <th>Facility Free</th>
-    <th>Facility Type</th>
-    <th>Max People</th>
-    <th>Stand Room</th>
-    <th>Pool Area</th>
-  </tr>
-  <tr th:each="facility : ${pageFacility}">
-    <td th:text="${facility.name}"></td>
-    <td th:text="${facility.cost}"></td>
-    <td th:text="${facility.area}"></td>
-    <td th:text="${facility.numberOfFloors}"></td>
-    <td th:text="${facility.rentType.name}"></td>
-    <td th:text="${facility.facilityFree}"></td>
-    <td th:text="${facility.facilityType.name}"></td>
-    <td th:text="${facility.maxPeople}"></td>
-    <td th:text="${facility.standardRoom}"></td>
-    <td th:text="${facility.poolArea}"></td>
-  </tr>
+    <tr>
+        <th>Name</th>
+        <th>Cost</th>
+        <th>Area</th>
+        <th>Number of Floors</th>
+        <th>Rent Type</th>
+        <th>Facility Free</th>
+        <th>Facility Type</th>
+        <th>Max People</th>
+        <th>Stand Room</th>
+        <th>Pool Area</th>
+        <th>Delete</th>
+        <th>Edit</th>
+    </tr>
+    <tr th:each="facility : ${pageFacility}">
+        <td th:text="${facility.name}"></td>
+        <td th:text="${facility.cost}"></td>
+        <td th:text="${facility.area}"></td>
+        <td th:text="${facility.numberOfFloors}"></td>
+        <td th:text="${facility.rentType.name}"></td>
+        <td th:text="${facility.facilityFree}"></td>
+        <td th:text="${facility.facilityType.name}"></td>
+        <td th:text="${facility.maxPeople}"></td>
+        <td th:text="${facility.standardRoom}"></td>
+        <td th:text="${facility.poolArea}"></td>
+        <td>
+            <button type="button" class="btn btn-primary" data-bs-target="#delete" data-bs-toggle="modal"
+                    th:attr="onclick=|isDelete('${facility.id}','${facility.name}')|">
+                Delete
+            </button>
+        </td>
+        <td>
+            <button type="button" class="btn btn-primary" data-bs-target="#edit" data-bs-toggle="modal"
+                    th:attr="onclick=|isEdit('${facility.id}','${facility.name}','${facility.cost}','${facility.area}',
+                    '${facility.descriptionOtherConvenience}','${facility.facilityFree}','${facility.maxPeople}','${facility.numberOfFloors}',
+                    '${facility.poolArea}','${facility.standardRoom}','${facility.rentType.id}','${facility.facilityType.id}')|">
+                Edit
+            </button>
+        </td>
+
+    </tr>
 </table>
 
 <div style="float: right" class="col-md-12 col-sm-12">
-  <a class="btn btn-outline-primary" th:href="@{facility(page=${pageFacility.number - 1})}" th:if="${pageFacility.hasPrevious()}" >Previous</a>
-  <span th:text="${pageFacility.number + 1 }"></span>/<span th:text="${pageFacility.totalPages - 1 }"></span>
-  <a class="btn btn-outline-primary" th:href="@{facility(page=${pageFacility.number + 1})}" th:if="${pageFacility.hasNext()}" >Next</a>
+    <a class="btn btn-outline-primary" th:href="@{facility(page=${pageFacility.number - 1})}"
+       th:if="${pageFacility.hasPrevious()}">Previous</a>
+    <span th:text="${pageFacility.number + 1 }"></span>/<span th:text="${pageFacility.totalPages - 1 }"></span>
+    <a class="btn btn-outline-primary" th:href="@{facility(page=${pageFacility.number + 1})}"
+       th:if="${pageFacility.hasNext()}">Next</a>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="delete" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Delete</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form th:action="@{facility/delete}" method="post">
+                <div class="modal-body">
+                    <input id="idDelete" name="idDelete" hidden>
+                    <p> Bạn Có Muốn Xóa</p>
+                    <span id="name" style="color: red;"></span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal create -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" th:action="@{facility/create}" th:object="${facility}">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary" th:attr="onclick=|addVilla()|">Villa
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary" th:attr="onclick=|addHouse()|">House
+                            </button>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary" th:attr="onclick=|addRoom()|">Room
+                            </button>
+                        </div>
+                    </div>
+                    <hr>
+                    <input th:field="*{facilityType}" id="facilityType" hidden>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Name</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{name}" type="text">
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Area</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{area}" type="number">
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Cost</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{cost}" type="number">
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Max People</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{maxPeople}" type="number">
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Rent Type</p>
+                        </div>
+                        <div class="col-md-9">
+                            <select th:field="*{rentType}">
+                                <option th:each="rent : ${rentTypes}" th:text="${rent.name}"
+                                        th:value="${rent.id}"></option>
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="row" id="standRoom">
+                        <div class="col-md-3">
+                            <p>Stand Room</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{standardRoom}" type="text">
+                        </div>
+                    </div>
+                    <div class="row" id="descriptionOtherConvenience">
+                        <div class="col-md-3">
+                            <p>Description other convenience</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{descriptionOtherConvenience}" type="text">
+                        </div>
+                    </div>
+                    <div class="row" id="poolArea">
+                        <div class="col-md-3">
+                            <p>Pool Area</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{poolArea}" type="text">
+                        </div>
+                    </div>
+                    <div class="row" id="numberOfFloors">
+                        <div class="col-md-3">
+                            <p>Number Of Floors</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{numberOfFloors}" type="text">
+                        </div>
+                    </div>
+                    <div class="row" id="facilityFree">
+                        <div class="col-md-3">
+                            <p>Facility Free</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{facilityFree}" type="text">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Edit-->
+<div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Edit</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" th:action="@{facility/edit}" th:object="${facility}">
+                    <input hidden th:field="*{id}" id="id">
+                    <input th:field="*{facilityType.id}" id="facilityTypeEdit">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Name</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{name}" type="text" id="nameFacility">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Area</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{area}" type="number" id="areaEdit">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Cost</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{cost}" type="number" id="costEdit">
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Max People</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{maxPeople}" type="number" id="maxPeople">
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <p>Rent Type</p>
+                        </div>
+                        <div class="col-md-9">
+                            <select th:field="*{rentType}" id="rentType">
+                                <option th:each="rent : ${rentTypes}" th:text="${rent.name}"
+                                        th:value="${rent.id}"></option>
+                            </select>
+                        </div>
+
+
+                    </div>
+                    <div class="row" id="standRoomEdit">
+                        <div class="col-md-3">
+                            <p>Stand Room</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{standardRoom}" type="text" id="standardRoom">
+                        </div>
+                    </div>
+                    <div class="row" id="descriptionOtherConvenienceEdit">
+                        <div class="col-md-3">
+                            <p>Description other convenience</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{descriptionOtherConvenience}" type="text" id="description">
+                        </div>
+                    </div>
+                    <div class="row" id="poolAreaEdit">
+                        <div class="col-md-3">
+                            <p>Pool Area</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{poolArea}" type="text" id="pool">
+                        </div>
+                    </div>
+                    <div class="row" id="numberOfFloorsEdit">
+                        <div class="col-md-3">
+                            <p>Number Of Floors</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{numberOfFloors}" type="text" id="floors">
+                        </div>
+                    </div>
+                    <div class="row" id="facilityFreeEdit">
+                        <div class="col-md-3">
+                            <p>Facility Free</p>
+                        </div>
+                        <div class="col-md-9">
+                            <input th:field="*{facilityFree}" type="text" id="facility">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 <div th:replace="~{navbar :: footer}"></div>
 </body>
+<script>
+    function addVilla() {
+        document.getElementById("standRoom").style.display = "flex";
+        document.getElementById("descriptionOtherConvenience").style.display = "flex";
+        document.getElementById("poolArea").style.display = "flex";
+        document.getElementById("numberOfFloors").style.display = "flex";
+        document.getElementById("facilityFree").style.display = "none";
+        document.getElementById("facilityType").value = 1;
+
+    }
+
+    function addHouse() {
+        document.getElementById("standRoom").style.display = "flex";
+        document.getElementById("descriptionOtherConvenience").style.display = "flex";
+        document.getElementById("poolArea").style.display = "none";
+        document.getElementById("numberOfFloors").style.display = "flex";
+        document.getElementById("facilityFree").style.display = "none";
+        document.getElementById("facilityType").value = 2;
+
+    }
+
+    function addRoom() {
+        document.getElementById("standRoom").style.display = "none";
+        document.getElementById("descriptionOtherConvenience").style.display = "none";
+        document.getElementById("poolArea").style.display = "none";
+        document.getElementById("numberOfFloors").style.display = "none";
+        document.getElementById("facilityFree").style.display = "flex";
+        document.getElementById("facilityType").value = 3;
+
+    }
+
+    function isDelete(id, name) {
+        document.getElementById("idDelete").value = id;
+        document.getElementById("name").innerText = name;
+    }
+
+    function isEdit(id, name, cost, area, description, facilityFree, maxPeople, numberOfFloors, poolArea, standRoom, rentType, facilityType) {
+        document.getElementById("id").value = id;
+        document.getElementById("nameFacility").value = name;
+        document.getElementById("costEdit").value = cost;
+        document.getElementById("areaEdit").value = area;
+        document.getElementById("description").value = description;
+        document.getElementById("facility").value = facilityFree;
+        document.getElementById("maxPeople").value = maxPeople;
+        document.getElementById("floors").value = numberOfFloors;
+        document.getElementById("rentType").value = rentType;
+        document.getElementById("standardRoom").value = standRoom;
+        document.getElementById("pool").value = poolArea;
+        document.getElementById("facilityTypeEdit").value = facilityType;
+
+        if (facilityType == 1) {
+            document.getElementById("standRoomEdit").style.display = "flex";
+            document.getElementById("descriptionOtherConvenienceEdit").style.display = "flex";
+            document.getElementById("poolAreaEdit").style.display = "flex";
+            document.getElementById("numberOfFloorsEdit").style.display = "flex";
+            document.getElementById("facilityFreeEdit").style.display = "none";
+
+
+        } else if (facilityType == 2) {
+            document.getElementById("standRoomEdit").style.display = "flex";
+            document.getElementById("descriptionOtherConvenienceEdit").style.display = "flex";
+            document.getElementById("poolAreaEdit").style.display = "none";
+            document.getElementById("numberOfFloorsEdit").style.display = "flex";
+            document.getElementById("facilityFreeEdit").style.display = "none";
+
+        } else if (facilityType == 3) {
+            document.getElementById("standRoomEdit").style.display = "none";
+            document.getElementById("descriptionOtherConvenienceEdit").style.display = "none";
+            document.getElementById("poolAreaEdit").style.display = "none";
+            document.getElementById("numberOfFloorsEdit").style.display = "none";
+            document.getElementById("facilityFreeEdit").style.display = "flex";
+
+        }
+
+    }
+
+
+</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"

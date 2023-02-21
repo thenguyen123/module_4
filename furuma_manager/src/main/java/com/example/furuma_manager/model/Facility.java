@@ -20,7 +20,7 @@ public class Facility {
     private String facilityFree;
     @ManyToOne
     @JoinColumn(name = "rent_type_id",referencedColumnName = "id")
-    private FacilityType facilityType;
+    private RentType rentType;
     @OneToMany(mappedBy = "facility")
     private Set<Contract> contractSet;
     private boolean isDelete;
@@ -64,7 +64,7 @@ public class Facility {
 
     @ManyToOne
     @JoinColumn(name = "facility_type_id",referencedColumnName = "id")
-    private RentType rentType;
+    private FacilityType facilityType;
 
     public int getId() {
         return id;
