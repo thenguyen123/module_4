@@ -7,8 +7,14 @@
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
+
 <div th:insert="~{navbar :: header}"></div>
 <p th:text="${mess}" style="color: red;"></p>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#contract">
+    Create Contract
+</button>
+
 <table class="table table-row-cell">
     <tr>
         <th>Name Customer</th>
@@ -27,16 +33,18 @@
         <td th:text="${contract.getContractDeposit()}"></td>
         <td th:text="${contract.getTotal()}"></td>
         <td>
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add" th:attr="onclick=|createContractDetail(${contract.getContractId()})|">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#add"
+                    th:attr="onclick=|createContractDetail(${contract.getContractId()})|">
                 +
             </button>
-            <a th:href="@{contract/show(id=${contract.getContractId()},page=${contractDtoPage.number})}" class=" btn btn-outline-primary">
+            <a th:href="@{contract/show(id=${contract.getContractId()},page=${contractDtoPage.number})}"
+               class=" btn btn-outline-primary">
                 Attach Facility
             </a>
         </td>
     </tr>
 </table>
-<!-- Modal -->
+<!-- Modal add -->
 <div class="modal fade" id="add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -45,7 +53,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form th:object="${contractDetail}" th:action="@{contract/create}" method="post">
-             <input th:field="*{contract}" id="idCreate">
+                <input th:field="*{contract}" id="idCreate" hidden>
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-3">Name:</div>
@@ -71,10 +79,11 @@
         </div>
     </div>
 </div>
+<!--modal attach-->
 <div>
     <div th:class="${pass=='true'? 'modal fade show':'modal fade'}"
          th:style="${pass =='true' ?'display:block':'display:none'}" class="modal fade" id="exampleModal" tabindex="-1"
-         aria-labelledby="exampleModalLabel" >
+         aria-labelledby="exampleModalLabel">
         <div class="modal-dialog">
             <div class="modal-content ">
                 <div class="modal-header">
@@ -106,16 +115,184 @@
            th:if="${contractDtoPage.hasNext()}">Next</a>
     </div>
 </div>
-    <div th:insert="~{navbar :: footer}"></div>
 
+<!-- Modal -->
+<div class="modal fade" id="contract" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Create Contract</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form onchange="total()">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <span>Ngày bắt đầu</span>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="date" class="form-control" id="startDay">
+                        </div>
+                        <div class="col-md-3">
+                            <span>Ngày kết thúc</span>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="date" class="form-control" id="endDay">
+                        </div>
+                        <div class="col-md-3">
+                            <span>Tiền gửi</span>
+                        </div>
+                        <div class="col-md-9">
+                            <input type="number" class="form-control" id="deposit">
+                        </div>
+                        <div class="col-md-3">
+                            <span>Tổng tiền</span>
+
+                        </div>
+                        <div class="col-md-9">
+                            <input type="number" id="sumCost" class="form-control" readonly>
+
+                        </div>
+                        <div class="col-md-3">
+                            <span>Chọn khách hàng</span>
+                        </div>
+                        <div class="col-md-9">
+                            <select id="customer">
+                                <option th:each="c: ${customerList}" th:text="${c.name}" th:value="${c.id}"></option>
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <span>Dịch vụ</span>
+                        </div>
+                        <div class="col-9">
+                            <select id="facility">
+                                <option th:each="f:${facilities}" th:text="${f.name}" th:value="${f.id}"
+                                        th:data-cost="${f.cost}"></option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <span>Dịch vụ đi kèm</span>
+                            <button th:attr="onclick=|showModal()|" type="button" class="btn btn-outline-primary">+
+                            </button>
+                        </div>
+                        <div class="row" style="display: none" id="showAttach">
+                            <th:block th:each="a : ${listAttach}">
+                                <div class="row checkbox-list">
+                                    <div class="col-md-6">
+                                        <input class="form-check-input check" type="checkbox" th:data-cost="${a.cost}"
+                                               th:value="${a.id}"
+                                               th:text="${a.name}">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <p>Quantity</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="number" min="1" class="form-control quantity">
+                                    </div>
+                                </div>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" th:attr="onclick=|saveContract()|">Save changes
+                    </button>
+                </div>
+            </form>
+            >
+        </div>
+    </div>
+</div>
+<div th:insert="~{navbar :: footer}"></div>
 </body>
 <script>
 
-    function createContractDetail(id){
-        document.getElementById("idCreate").value=id;
+    function createContractDetail(id) {
+        document.getElementById("idCreate").value = id;
     }
+
+    function showModal() {
+        if (document.getElementById("showAttach").style.display == "block") {
+            document.getElementById("showAttach").style.display = "none";
+        } else {
+            document.getElementById("showAttach").style.display = "block";
+        }
+    }
+
+    let contractDto = []
+
+    function saveContract() {
+
+        let startDay = document.getElementById("startDay").value
+        let endDay = document.getElementById("endDay").value
+        let customer = document.getElementById("customer").value
+        let facility = document.getElementById("facility").value
+        let deposit = document.getElementById("deposit").value
+        let array = {
+            startDate: startDay,
+            endDate: endDay,
+            deposit: deposit,
+            customer: {
+                id: customer
+            },
+            facility: {
+                id: facility
+            }
+        }
+        let checks = document.querySelectorAll('.check')
+        let quantity = document.querySelectorAll('.quantity')
+
+        for (let i = 0; i < checks.length; i++) {
+            if (checks[i].checked) {
+                let arrayDto = {
+                    contract: array,
+                    quantity: quantity[i].value,
+                    attachFacility: {
+                        id: checks[i].value
+                    }
+                };
+                contractDto.push(arrayDto)
+            }
+
+        }
+
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+
+            type: "POST",
+            data: JSON.stringify(contractDto),
+            url: "http://localhost:8080/api/contract/create",
+            success: function () {
+                window.location.reload();
+            }
+        })
+    }
+
+    function total() {
+        let facilityCost = parseFloat($("#facility option:selected").data("cost"));
+        let quantities = document.querySelectorAll('.quantity')
+        let checks = document.querySelectorAll('.check')
+        let totalCost = facilityCost;
+
+        for (let i = 0; i < checks.length; i++) {
+            if (checks[i].checked) {
+                let check = checks[i].dataset.cost
+                let quantity = parseInt(quantities[i].value)
+                let prices = parseFloat(check)
+                totalCost += prices * quantity
+            }
+        }
+        document.getElementById("sumCost").value = totalCost;
+    }
+
+
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 </html>

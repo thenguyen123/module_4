@@ -71,4 +71,9 @@ public class CustomerService implements ICustomerService {
         }
         return null;
     }
+
+    @Override
+    public List<Customer> findAllList() {
+        return customerRepository.findAll();
+    }
 }

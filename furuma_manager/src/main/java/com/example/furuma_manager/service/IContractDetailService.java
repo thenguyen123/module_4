@@ -7,4 +7,5 @@ import java.util.List;
 public interface IContractDetailService {
     boolean save(ContractDetail contractDetail);
 List<ContractDetail> findById(int id);
+
 }

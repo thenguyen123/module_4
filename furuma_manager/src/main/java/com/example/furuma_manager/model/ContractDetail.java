@@ -7,7 +7,7 @@ public class ContractDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String quantity;
+    private int quantity;
     @ManyToOne
     @JoinColumn(name = "attach_facility_id",referencedColumnName = "id")
     private AttachFacility attachFacility;
@@ -16,7 +16,7 @@ public class ContractDetail {
     private Contract contract;
     private boolean isDelete;
 
-    public ContractDetail(int id, String quantity, AttachFacility attachFacility, Contract contract, boolean isDelete) {
+    public ContractDetail(int id, int quantity, AttachFacility attachFacility, Contract contract, boolean isDelete) {
         this.id = id;
         this.quantity = quantity;
         this.attachFacility = attachFacility;
@@ -43,11 +43,11 @@ public class ContractDetail {
         this.id = id;
     }
 
-    public String getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(String quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 

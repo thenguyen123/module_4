@@ -124,7 +124,6 @@
                 Edit
             </button>
         </td>
-
     </tr>
 </table>
 
@@ -333,13 +332,11 @@
                             <p>Rent Type</p>
                         </div>
                         <div class="col-md-9">
-                            <select th:field="*{rentType}" id="rentType">
+                            <select th:field="*{rentType}" id="editRentType">
                                 <option th:each="rent : ${rentTypes}" th:text="${rent.name}"
                                         th:value="${rent.id}"></option>
                             </select>
                         </div>
-
-
                     </div>
                     <div class="row" id="standRoomEdit">
                         <div class="col-md-3">
@@ -437,7 +434,7 @@
         document.getElementById("facility").value = facilityFree;
         document.getElementById("maxPeople").value = maxPeople;
         document.getElementById("floors").value = numberOfFloors;
-        document.getElementById("rentType").value = rentType;
+        document.getElementById("editRentType").value = rentType;
         document.getElementById("standardRoom").value = standRoom;
         document.getElementById("pool").value = poolArea;
         document.getElementById("facilityTypeEdit").value = facilityType;

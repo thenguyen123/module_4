@@ -40,6 +40,10 @@ public class Contract {
         this.isDelete = isDelete;
     }
 
+    public Contract(int id) {
+        this.id = id;
+    }
+
     public Contract() {
     }
     public boolean isDelete() {
