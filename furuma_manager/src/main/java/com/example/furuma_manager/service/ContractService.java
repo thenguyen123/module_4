@@ -8,6 +8,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 @Service
 public class ContractService implements IContractService{
     @Autowired
@@ -22,6 +25,17 @@ public class ContractService implements IContractService{
         if(contract==null){
             return false;
         }contractRepository.save(contract);
+        return true;
+    }
+
+    @Override
+    public boolean checkDate(String startDay, String endDate) {
+        DateTimeFormatter formatter=DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate localStartDate=LocalDate.parse(startDay,formatter);
+        LocalDate localEndDate=LocalDate.parse(endDate,formatter);
+        if(localStartDate.compareTo(localEndDate)>0){
+            return false;
+        }
         return true;
     }
 }

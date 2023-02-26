@@ -13,5 +13,7 @@ public interface ICustomerService {
     boolean update(Customer customer);
     Customer findById(int id);
     String checkData(String email,String idCard,String phone);
+    String checkUpdate(int id,String email,String idCard,String phone);
     List<Customer> findAllList();
+    boolean checkId(int id);
 }

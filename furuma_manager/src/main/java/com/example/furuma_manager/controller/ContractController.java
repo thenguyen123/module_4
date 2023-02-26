@@ -74,17 +74,6 @@ private List<ContractDetail> list=new ArrayList<>();
         return "redirect:/contract";
     }
 
-    @PostMapping("/createContract")
-    public String saveContract(Contract contract, @RequestParam String arrayAttachFacility, RedirectAttributes redirectAttributes) {
-//        boolean check = contractService.save(contract);
-//        contractDetail.setContract(contract);
-//        boolean flag = contractDetailService.save(contractDetail);
 
-            System.out.println(arrayAttachFacility);
-
-        String mess = "success";
-        redirectAttributes.addFlashAttribute("mess", mess);
-        return "redirect:/contract";
-    }
 
 }

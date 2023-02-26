@@ -8,4 +8,5 @@ import org.springframework.data.domain.Pageable;
 public interface IContractService {
     Page<IContractDto> getAllContract(Pageable pageable);
     boolean save(Contract contract);
+    boolean checkDate(String startDay, String endDate);
 }

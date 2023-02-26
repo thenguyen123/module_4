@@ -73,7 +73,40 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
+    public String checkUpdate(int id, String email, String idCard, String phone) {
+        List<Customer> list = customerRepository.findAll();
+        for (Customer c : list) {
+            if (c.getId() != id) {
+                if (c.getEmail().equals(email)) {
+                    return "email duplicates";
+                }
+                if (c.getIdCard().equals(idCard)) {
+
+                    return "Id Card duplicates";
+                }
+                if (c.getPhoneNumber().equals(phone)) {
+                    return "phone number duplicate";
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
     public List<Customer> findAllList() {
         return customerRepository.findAll();
+    }
+
+    @Override
+    public boolean checkId(int id) {
+        List<Customer> list = customerRepository.findAll();
+        for (Customer c :
+                list) {
+            if (c.getId() == id) {
+                return true;
+            }
+
+        }
+        return false;
     }
 }
