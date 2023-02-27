@@ -19,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -43,15 +44,19 @@ public class FacilityController {
         model.addAttribute("facilityDto", new FacilityDto());
         model.addAttribute("nameSearch", nameSearch);
         model.addAttribute("type", typeSearch);
+
+
+
         return "facility/list";
     }
 
     @PostMapping("create")
-    public String save(@Validated @ModelAttribute FacilityDto facilityDto, BindingResult bindingResult,Model model,
-                       @PageableDefault(size = 3, page = 0) Pageable pageable, RedirectAttributes redirectAttributes,@RequestParam(defaultValue = "", required = false) String nameSearch,
+    public String save(@Validated @ModelAttribute FacilityDto facilityDto, BindingResult bindingResult, Model model,
+                       @PageableDefault(size = 3, page = 0) Pageable pageable, RedirectAttributes redirectAttributes, @RequestParam(defaultValue = "", required = false) String nameSearch,
                        @RequestParam(defaultValue = "", required = false) String typeSearch) {
-        if(bindingResult.hasErrors()){
-            model.addAttribute("haserr","true");
+        new FacilityDto().validate(facilityDto,bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("haserr", "true");
             Page<Facility> facilityPage = iFacilityService.findAll(" ", " ", pageable);
             List<FacilityType> facilityTypeList = iFacilityTypeService.findAll();
             List<RentType> rentTypes = rentTypeService.findAll();
@@ -63,8 +68,9 @@ public class FacilityController {
             model.addAttribute("type", typeSearch);
             return "facility/list";
 
-        } Facility facility1=new Facility();
-        BeanUtils.copyProperties(facilityDto,facility1);
+        }
+        Facility facility1 = new Facility();
+        BeanUtils.copyProperties(facilityDto, facility1);
         boolean check = iFacilityService.save(facility1);
         String mess = "success";
         if (!check) {

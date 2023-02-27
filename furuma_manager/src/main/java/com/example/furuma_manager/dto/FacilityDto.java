@@ -2,6 +2,8 @@ package com.example.furuma_manager.dto;
 
 import com.example.furuma_manager.model.FacilityType;
 import com.example.furuma_manager.model.RentType;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
@@ -10,23 +12,23 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
-public class FacilityDto {
+public class FacilityDto implements Validator {
     private int id;
-    @Pattern(regexp = "^[A-Z][a-z]*[0-9]+(\\s[A-Z][a-z]*[0-9]+)+$",message = "Tên phải được viết hoa chữ cái đầu")
+    @Pattern(regexp = "^[A-Z][a-z]*[0-9]+(\\s[A-Z][a-z]*[0-9]+)+$", message = "Tên phải được viết hoa chữ cái đầu")
     private String name;
 
-    @Min(value = 1,message = "Diện tích phải lớn hơn 0")
+    @Min(value = 1, message = "Diện tích phải lớn hơn 0")
     private int area;
 
-    @Min(value = 1,message = "Giá phải lớn hơn 0")
+    @Min(value = 1, message = "Giá phải lớn hơn 0")
     private double cost;
-    @Min( value = 1,message = "số người tối đa phải là số nguyên dương")
+    @Min(value = 1, message = "số người tối đa phải là số nguyên dương")
     private int maxPeople;
     private String standardRoom;
     private String descriptionOtherConvenience;
-    @Min(value = 0,message = "diện tích phaải lớn hơn 0")
+    @Min(value = 0, message = "diện tích phaải lớn hơn 0")
     private double poolArea;
-    @Min(value = 0,message = "số tầng phải lớn hon 0")
+    @Min(value = 0, message = "số tầng phải lớn hon 0")
     private int numberOfFloors;
 
     private String facilityFree;
@@ -162,5 +164,26 @@ public class FacilityDto {
 
     public void setRentType(RentType rentType) {
         this.rentType = rentType;
+    }
+
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return false;
+    }
+
+    @Override
+    public void validate(Object target, Errors errors) {
+        FacilityDto facilityDto = (FacilityDto) target;
+        if (!checkInteger(facilityDto.maxPeople, facilityDto.maxPeople)) {
+            errors.rejectValue("maxPeople", "maxPeople", "Số người phải là sô nguyên dương");
+        }
+        if(!checkInteger(facilityDto.numberOfFloors,facilityDto.numberOfFloors)){
+            errors.rejectValue("numberOfFloors","numberOfFloors","số tầng phải là số nguyên dương");
+        }
+    }
+
+    public boolean checkInteger(double number, int number2) {
+        return number - number2 == 0;
+
     }
 }

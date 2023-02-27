@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -39,6 +40,9 @@ public class CustomerController {
         model.addAttribute("customers", page);
         CustomerDto customerDto = new CustomerDto();
         model.addAttribute("customerDto", customerDto);
+
+        LocalDate minAge = LocalDate.now().minusYears(18);
+        model.addAttribute("minAge", minAge);
         return "customer/list";
     }
 

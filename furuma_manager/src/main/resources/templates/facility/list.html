@@ -331,7 +331,8 @@
                             <p>Max People</p>
                         </div>
                         <div class="col-md-9">
-                            <input th:field="*{maxPeople}" type="number" id="maxPeople">
+                            <input th:field="*{maxPeople}" type="number" id="maxPeople" th:value="0">
+                            <p th:if="${#fields.hasErrors('maxPeople')}" th:errors="*{maxPeople}"></p>
                         </div>
 
                     </div>
@@ -368,6 +369,7 @@
                         </div>
                         <div class="col-md-9">
                             <input th:field="*{poolArea}" type="text" id="pool">
+                            <p th:if="${#fields.hasErrors('poolArea')}" th:errors="*{poolArea}"></p>
                         </div>
                     </div>
                     <div class="row" id="numberOfFloorsEdit">
@@ -375,7 +377,8 @@
                             <p>Number Of Floors</p>
                         </div>
                         <div class="col-md-9">
-                            <input th:field="*{numberOfFloors}" type="text" id="floors">
+                            <input th:field="*{numberOfFloors}" type="text" id="floors" th:value="0">
+                            <p th:if="${#fields.hasErrors()}" th:errors="*{numberOfFloors}" ></p>
                         </div>
                     </div>
                     <div class="row" id="facilityFreeEdit">
@@ -387,7 +390,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" th:href="@{facility}">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
                     </div>
                 </form>

@@ -199,7 +199,7 @@
                     <p th:if="${#fields.hasErrors('name')}" th:errors="${name}" style="color: red"></p>
 
                     <span class="text">Day Of Brith</span>
-                    <input class="form-control" type="date" id="day" th:field="*{dayOfBrith}" required>
+                    <input class="form-control" type="date" id="day" th:field="*{dayOfBrith}" required th:min="${minAge}">
 
                     <span class="text">Id Card</span>
                     <input class="form-control" type="text" id="idCardEdit" th:field="*{idCard}" required>
