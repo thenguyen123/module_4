@@ -168,7 +168,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" th:action="@{facility/create}" th:object="${facilityDto}">
+                <form method="post" th:action="@{/facility/create}" th:object="${facilityDto}">
                     <div class="row">
                         <div class="col-md-4">
                             <button type="button" class="btn btn-primary" th:attr="onclick=|addVilla()|">Villa
@@ -298,7 +298,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" th:action="@{facility/edit}" th:object="${facilityDto}">
+                <form method="post" th:action="@{/facility/edit}" th:object="${facilityDto}">
                     <input hidden th:field="*{id}" id="id">
                     <input th:field="*{facilityType.id}" id="facilityTypeEdit" hidden>
                     <div class="row">

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -44,9 +45,6 @@ public class FacilityController {
         model.addAttribute("facilityDto", new FacilityDto());
         model.addAttribute("nameSearch", nameSearch);
         model.addAttribute("type", typeSearch);
-
-
-
         return "facility/list";
     }
 

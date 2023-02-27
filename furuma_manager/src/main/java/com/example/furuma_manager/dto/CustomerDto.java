@@ -10,6 +10,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.lang.annotation.Annotation;
+import java.time.LocalDate;
+import java.time.Period;
 
 public class CustomerDto implements Validator {
     private int id;
@@ -22,9 +24,8 @@ public class CustomerDto implements Validator {
     @Pattern(regexp = "^(090\\d{7}|091\\d{7}|\\(84\\)\\+91\\d{7}|\\(84\\)\\+90\\d{7})$",
             message = "Số điện thoại phải đúng định dạng 090xxxxxxx hoặc 091xxxxxxx hoặc (84)+90xxxxxxx hoặc (84)+91xxxxxxx.")
     private String phoneNumber;
-    @Pattern(regexp = "^[0-9]{9}|[0-9]{11}$",message = "Số CMND phải đúng định dạng XXXXXXXXX hoặc XXXXXXXXXXXX (X là số 0-9) ")
+    @Pattern(regexp = "^[0-9]{9}|[0-9]{11}$", message = "Số CMND phải đúng định dạng XXXXXXXXX hoặc XXXXXXXXXXXX (X là số 0-9) ")
     private String idCard;
-    @Pattern(regexp = "^(0?[1-9]|[12][0-9]|3[01])\\/(0?[1-9]|1[012])\\/\\d{4}$",message = "Ngày phải đúng định dạng DD/MM/YYYY")
     private String dayOfBrith;
     private int gender;
     private CustomerType customerType;
@@ -124,6 +125,12 @@ public class CustomerDto implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
-
+        CustomerDto customerDto = (CustomerDto) target;
+        LocalDate localDate = LocalDate.parse(customerDto.getDayOfBrith());
+        LocalDate currentDate = LocalDate.now();
+        int age = Period.between(localDate, currentDate).getYears();
+        if (age < 18) {
+            errors.rejectValue("dayOfBrith", "dayOfBrith", "Bạn chưa 18+");
+        }
     }
 }

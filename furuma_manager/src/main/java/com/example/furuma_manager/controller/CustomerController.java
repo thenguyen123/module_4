@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
@@ -41,8 +42,11 @@ public class CustomerController {
         CustomerDto customerDto = new CustomerDto();
         model.addAttribute("customerDto", customerDto);
 
-        LocalDate minAge = LocalDate.now().minusYears(18);
+        LocalDate maxAge = LocalDate.now().minusYears(18);
+        LocalDate minAge = LocalDate.now().minusYears(70);
         model.addAttribute("minAge", minAge);
+        model.addAttribute("maxAge", maxAge);
+        System.out.println(minAge);
         return "customer/list";
     }
 
@@ -51,7 +55,13 @@ public class CustomerController {
                        @RequestParam(defaultValue = "", required = false) String nameSearch, @RequestParam(defaultValue = "", required = false) String emailSearch,
                        @RequestParam(defaultValue = "", required = false) String typeCustomerSearch,
                        @PageableDefault(size = 5, page = 0) Pageable pageable, Model model, RedirectAttributes redirectAttributes) {
+
+        if(customerDto.getDayOfBrith()==""){
+            return "redirect:/customer";
+        }
+        new CustomerDto().validate(customerDto,bindingResult);
         if (bindingResult.hasErrors()) {
+
             Page<Customer> page = customerService.findAll(nameSearch, emailSearch, typeCustomerSearch, pageable);
             List<CustomerType> customerTypeList = customerTypeService.findAll();
             model.addAttribute("nameSearch", nameSearch);

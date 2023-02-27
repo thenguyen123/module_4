@@ -144,7 +144,8 @@
                     <p style="color:red;" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
 
                     <span class="text">Day Of Brith</span>
-                    <input class="form-control" type="date" th:field="*{dayOfBrith}" required>
+                    <input class="form-control" type="date" th:field="*{dayOfBrith}" required th:min="${minAge}"
+                           th:max="${maxAge}">
                     <p style="color: red" th:if="${#fields.hasErrors('dayOfBrith')}" th:errors="*{dayOfBrith}"></p>
 
                     <p class="text">Id Card</p>
@@ -153,7 +154,7 @@
 
                     <span class="text">Phone Number</span>
                     <input type="text" th:field="*{phoneNumber}" required>
-                   <p style="color:red;" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
+                    <p style="color:red;" th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
 
                     <span class="text">Email</span>
                     <input class="form-control" type="email" th:field="*{email}" required>
@@ -198,22 +199,23 @@
                     <input class="form-control" type="text" id="nameEdit" th:field="*{name}" required>
                     <p th:if="${#fields.hasErrors('name')}" th:errors="${name}" style="color: red"></p>
 
-                    <span class="text">Day Of Brith</span>
-                    <input class="form-control" type="date" id="day" th:field="*{dayOfBrith}" required th:min="${minAge}">
-
-                    <span class="text">Id Card</span>
+                    <p class="text">Day Of Brith</p>
+                    <input class="form-control" th:min="${minAge}" th:max="${maxAge}" type="date" id="day"
+                           th:field="*{dayOfBrith}" required>
+                    <p th:if="${#fields.hasErrors('dayOfBrith')}" th:errors="*{dayOfBrith}"></p>
+                    <p class="text">Id Card</p>
                     <input class="form-control" type="text" id="idCardEdit" th:field="*{idCard}" required>
                     <p th:if="${#fields.hasErrors('idCard')}" th:errors="*{idCard}" style="color: red"></p>
 
-                    <span class="text">Phone Number</span>
+                    <p class="text">Phone Number</p>
                     <input class="form-control" type="text" id="phone" th:field="*{phoneNumber}" required>
                     <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
 
-                    <span class="text">Email</span>
+                    <p class="text">Email</p>
                     <input class="form-control" type="email" id="emailEdit" th:field="*{email}">
-                    <p th:if="${#fields.hasErrors('email')}" th:errors="${email}" style="color: red;"> </p>
+                    <p th:if="${#fields.hasErrors('email')}" th:errors="${email}" style="color: red;"></p>
 
-                    <span class="text">Address</span>
+                    <p class="text">Address</p>
                     <input class="form-control" type="text" id="addressEdit" th:field="*{address}">
                     <span class="text">Type</span>
                     <select th:field="*{customerType}">
